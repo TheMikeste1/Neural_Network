@@ -181,7 +181,7 @@ class NeuralBrain:
         if len(inputs) != self.num_inputs:
             raise ArithmeticError(f"Number of inputs is incorrect! Received {len(inputs)} inputs,"
                                   f"expected {self.num_inputs}")
-        if self.neural_layers is "Nothing":
+        if type(self.neural_layers) is str:
             return inputs
 
         outputs = inputs
