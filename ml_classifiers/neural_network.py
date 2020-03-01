@@ -306,6 +306,9 @@ class NeuralNetworkClassifier(Classifier):
                 print(f"Epoch {iteration}: {accuracy * 100:.2f}%")
                 self.accuracy = accuracy
                 done = True
+                if self.graph_points[-1, 0] != iteration:
+                    point = np.array([iteration, accuracy * 100])
+                    self.graph_points = np.vstack((self.graph_points, point))
             iteration += 1
 
     def predict(self, dataset):
@@ -334,7 +337,10 @@ class NeuralNetworkClassifier(Classifier):
         if not self.enable_graph:
             print("Cannot show graph: Graphing is not enabled")
             return
-        figure = plt.figure(figsize=((self.graph_points[-1, 0] + 1) / 30, 4), dpi=96)
+        width = self.graph_points.shape[0] / 30
+        if width < 4:
+            width = 4
+        figure = plt.figure(figsize=(width, 4), dpi=96)
         graph = figure.add_subplot()
         graph.set_ylim((0, 100))
         graph.set_xlim((0, self.graph_points[-1, 0]))

@@ -13,7 +13,8 @@ def main():
     print("Classifier 0")
     data_train, data_test, targets_train, targets_test = train_test_split(iris.data, iris.target, train_size=ratio)
     nodes_per_layer = [3, 3]
-    classifier = NeuralNetworkClassifier(nodes_per_layer, max_iterations=20000, desired_accuracy=.90, enable_graph=True)
+    classifier = NeuralNetworkClassifier(nodes_per_layer, max_iterations=20000, desired_accuracy=.90, enable_graph=True,
+                                         epochs_per_point=50)
     classifier.fit(data_train, targets_train)
     classifier.display_graph("Classifier 0")
     print()
@@ -29,7 +30,7 @@ def main():
         nodes_per_layer.append(3)
         data_train, data_test, targets_train, targets_test = train_test_split(iris.data, iris.target, train_size=ratio)
         c = NeuralNetworkClassifier(nodes_per_layer, desired_accuracy=0, max_iterations=max_iterations,
-                                    enable_graph=True)
+                                    enable_graph=True, epochs_per_point=50)
         c.fit(data_train, targets_train)
         c.display_graph(f"Classifier {i + 1}")
         if c.accuracy > classifier.accuracy:
